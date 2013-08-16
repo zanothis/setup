@@ -14,3 +14,6 @@ sudo apt-get update
 sudo apt-get install -y nodejs
 
 npm install -g jshint
+
+git config --global user.name "Nathan Benjamin"
+git config --global user.email "nb-accounts@thebenjamins.me"
