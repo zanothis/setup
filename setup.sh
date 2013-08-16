@@ -17,3 +17,11 @@ npm install -g jshint
 
 git config --global user.name "Nathan Benjamin"
 git config --global user.email "nb-accounts@thebenjamins.me"
+
+git clone git@github.com:zanothis/dotfiles.git
+cp dotfiles/.screenrc ~
+cp dotfiles/.vimrc ~
+
+git clone git@github.com:zanothis/vim-packages.git
+mkdir .vim
+cd vim-packages; cp -rf * ~/.vim
