@@ -21,15 +21,29 @@ fi
 #
 #npm install -g jshint
 #
-#git config --global user.name "Nathan Benjamin"
-#git config --global user.email "nb-accounts@thebenjamins.me"
+git config --global user.name "Nathan Benjamin"
+git config --global user.email "nb-accounts@thebenjamins.me"
 
-git clone git://github.com/zanothis/dotfiles.git
-cp dotfiles/.screenrc ~
-cp dotfiles/.vimrc ~
+if [ ! -d dotfiles ]; then
+  git clone git://github.com/zanothis/dotfiles.git
+  cp dotfiles/.screenrc ~
+  cp dotfiles/.vimrc ~
+else
+  cd dotfiles
+  git pull
+  cd ..
+  cp dotfiles/.screenrc ~
+  cp dotfiles/.vimrc ~
+fi
 
-git clone git://github.com/zanothis/vim-packages.git
-
-mkdir -p ~/.vim
-
-cd vim-packages; cp -rf * ~/.vim
+if [ ! -d vim-packages ]; then
+  git clone git://github.com/zanothis/vim-packages.git
+  
+  mkdir -p ~/.vim
+  
+  cd vim-packages; cp -rf * ~/.vim
+else
+  cd vim-packages
+  git pull
+  cp -rf * ~/.vim
+fi
