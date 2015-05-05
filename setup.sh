@@ -41,9 +41,13 @@ if [ ! -d vim-packages ]; then
   
   mkdir -p ~/.vim
   
-  cd vim-packages; cp -rf * ~/.vim
+  cd vim-packages
+  git submodule init
+  git submodule update
+  cp -rf * ~/.vim
 else
   cd vim-packages
   git pull
+  git submodule update
   cp -rf * ~/.vim
 fi
