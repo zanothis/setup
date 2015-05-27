@@ -10,37 +10,29 @@ if [ ! `which curl` ]; then
   sudo apt-get install -y curl
 fi
 
-#wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-
-#heroku login
-#
-#sudo apt-get install -y python-software-properties python g++ make
-#sudo add-apt-repository ppa:chris-lea/node.js
-#sudo apt-get update
-#sudo apt-get install -y nodejs
-#
-#npm install -g jshint
-#
-git config --global user.name "Nathan Benjamin"
-git config --global user.email "nb-accounts@thebenjamins.me"
+if [ ! `which ag` ]; then
+  sudo apt-get install -y silversearcher-ag
+fi
 
 if [ ! -d dotfiles ]; then
-  git clone git://github.com/zanothis/dotfiles.git
+  git clone https://github.com/zanothis/dotfiles.git
   cp dotfiles/.screenrc ~
-  cp dotfiles/.vimrc ~
+  cp dotfiles/.vimrc ~/.vimrc
+  cp dotfiles/.gitconfig ~/.gitconfig
 else
   cd dotfiles
   git pull
   cd ..
   cp dotfiles/.screenrc ~
-  cp dotfiles/.vimrc ~
+  cp dotfiles/.vimrc ~/.vimrc
+  cp dotfiles/.gitconfig ~/.gitconfig
 fi
 
 if [ ! -d vim-packages ]; then
-  git clone git://github.com/zanothis/vim-packages.git
-  
+  git clone https://github.com/zanothis/vim-packages.git
+
   mkdir -p ~/.vim
-  
+
   cd vim-packages
   git submodule init
   git submodule update
