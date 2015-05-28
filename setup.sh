@@ -16,14 +16,16 @@ fi
 
 if [ ! -d dotfiles ]; then
   git clone https://github.com/zanothis/dotfiles.git
-  cp dotfiles/.screenrc ~
+  cp dotfiles/.screenrc ~/
+  cp dotfiles/.inputrc ~/
   cp dotfiles/.vimrc ~/.vimrc
   cp dotfiles/.gitconfig ~/.gitconfig
 else
   cd dotfiles
   git pull
   cd ..
-  cp dotfiles/.screenrc ~
+  cp dotfiles/.screenrc ~/
+  cp dotfiles/.inputrc ~/
   cp dotfiles/.vimrc ~/.vimrc
   cp dotfiles/.gitconfig ~/.gitconfig
 fi
