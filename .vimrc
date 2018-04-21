@@ -15,7 +15,7 @@ let g:startify_custom_header = [
 " }}}
 
 " Plugins {{{
-    call plug#begin('~/.local/share/nvim/plugged')
+    call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-sensible'                   " Sensible defaults for vim
     Plug 'ericbn/vim-solarized'                 " Solarized colorscheme
     Plug 'mhinz/vim-startify'                   " Welcome screen
@@ -39,6 +39,7 @@ let g:startify_custom_header = [
     Plug 'plasticboy/vim-markdown'
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
     call plug#end()
 " }}}
 
@@ -197,7 +198,7 @@ nmap <leader>bq :bp <BAR> bd #<CR>
 nmap <C-p> :Files<CR>
 """""""""""""""""""""""""""""""" NerdTree
 " Toggle NERDtree
-noremap <C-e> :NERDTreeMirrorToggle<CR>
+noremap <leader>n :NERDTreeMirrorToggle<CR>
 " Bookmark file/folder in NERDTree
 nnoremap <leader>nb :Bookmark<CR>
 " Find current file on NERDTree

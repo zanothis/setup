@@ -53,6 +53,24 @@ else
   logn "..........$CHECK"
 fi
 
+log "Checking for go"
+if [ ! `which go` ]; then
+  log "\n${INDENT}Installing go..........."
+  sudo pacman -S --noconfirm go >> $LOG 2>&1
+  status_out
+else
+  logn "...........$CHECK"
+fi
+
+log "Checking for mono"
+if [ ! `which mono` ]; then
+  log "\n${INDENT}Installing mono........."
+  sudo pacman -S --noconfirm mono >> $LOG 2>&1
+  status_out
+else
+  logn ".........$CHECK"
+fi
+
 if [ ! -d $HOME/dotfiles ]; then
   log "Installing dotfiles...\n${INDENT}Cloning into dotfiles..."
   git clone https://github.com/zanothis/dotfiles.git $HOME/dotfiles >> $LOG 2>&1
