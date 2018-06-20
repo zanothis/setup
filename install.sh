@@ -71,20 +71,36 @@ else
   logn ".........$CHECK"
 fi
 
+log "Checking for zsh"
+if [ ! `which zsh` ]; then
+  log "\n${INDENT}Installing zsh.........."
+  sudo pacman -S --noconfirm zsh >> $LOG 2>&1
+  status_out
+else
+  logn "..........$CHECK"
+fi
+
 if [ ! -d $HOME/dotfiles ]; then
   log "Installing dotfiles...\n${INDENT}Cloning into dotfiles..."
-  git clone https://github.com/zanothis/dotfiles.git $HOME/dotfiles >> $LOG 2>&1
+  git clone https://github.com/zanothis/setup.git $HOME/dotfiles >> $LOG 2>&1
   status_out
   if [ $? -ne 0 ]; then
     log "\n${INDENT}Linking dotfiles to \"$HOME\"..."
-    log "\n${INDENT}${INDENT}Linking .screenrc....."
-    ln -s $HOME/dotfiles/.screenrc $HOME/.screenrc
-    log "$CHECK\n${INDENT}${INDENT}Linking .inputrc......"
-    ln -s $HOME/dotfiles/.inputrc $HOME/.inputrc
+    #log "\n${INDENT}${INDENT}Linking .screenrc....."
+    #ln -s $HOME/dotfiles/.screenrc $HOME/.screenrc
+    #log "$CHECK\n${INDENT}${INDENT}Linking .inputrc......"
+    #ln -s $HOME/dotfiles/.inputrc $HOME/.inputrc
+    log "$CHECK\n${INDENT}${INDENT}Linking configs......."
+    cp -sbr $HOME/dotfiles/.config $HOME/.config
+    cp -sbr $HOME/.config/i3 $HOME/.i3
     log "$CHECK\n${INDENT}${INDENT}Linking .vimrc........"
     ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
     log "$CHECK\n${INDENT}${INDENT}Linking .gitconfig...."
     ln -s $HOME/dotfiles/.gitconfig $HOME/.gitconfig
+    log "$CHECK\n${INDENT}${INDENT}Linking .gitmessage..."
+    ln -s $HOME/dotfiles/.gitmessage $HOME/.gitmessage
+    log "$CHECK\n${INDENT}${INDENT}Linking .zshrc........"
+    ln -s $HOME/dotfiles/.zshrc $HOME/.zshrc
     logn $CHECK
   fi
 else
@@ -103,3 +119,7 @@ if [ ! -f $HOME/.vim/autoload/plug.vim ]; then
   vim +PlugInstall +qall
   status_out
 fi
+
+log "Activating zsh............"
+chsh -s $(which zsh)
+status_out

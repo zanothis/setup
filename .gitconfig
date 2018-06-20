@@ -1,0 +1,62 @@
+[alias]
+    br = branch
+    ch = show --pretty="" --name-status
+    cleanup = "!git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d"
+    cm = "!git commit && curl -s http://whatthecommit.com/index.txt"
+    co = checkout
+    cob = checkout -b
+    dl = !git ls -1
+    dif = diff --staged
+    dlc = diff --cached HEAD^
+    dr = "!f() { git diff \"$1\"^..\"$1\"; }; f"
+    ec = config --global -e
+    find = "!f() { git ls-files $2 | grep $1; }; f"
+    fl = log -u
+    la = "!f() { git config -l | grep alias | cut -c 7- | awk -F\"=\" '{ st=index($0,\"=\"); printf \"%-12s = %s\\n\", $1, substr($0,st+1)}'; }; f"
+    lc = !git ll "$1"^.."$1"
+    ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+    lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+    migrate = "!f(){ git rebase --onto $1 $2 ${3-HEAD}; }; f"
+    resolve = "!f(){ vim $1; git add $1; }; f"
+    rollback = reset --soft HEAD~1
+    save = !git add -A && git commit -m 'SAVEPOINT'
+    st = status --column=
+    undo = reset HEAD~1 --mixed
+    up = "!f() { git pull --rebase --prune --autostash $@ && git submodule update --init --recursive; }; f"
+    upr = "!f() { git pull --rebase --prune --autostash $@ && git submodule update --init --recursive --remote; }; f"
+
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    ui = true
+    pager = true
+
+[commit]
+    template = ~/.gitmessage
+
+[core]
+    editor = vim
+    pager = less -X
+
+[diff]
+    tool = vimdiff
+
+[merge]
+    tool = mvimdiff
+    conflictstyle = diff3
+
+[mergetool "mvimdiff"]
+    cmd = mvimdiff -f "$LOCAL" "$MERGED" "$REMOTE"
+
+[push]
+    default = simple
+
+[color "diff"]
+    old = red strike
+    new = green italic
+[user]
+	email = nathan@thebenjamins.me
+	name = Nathan Benjamin

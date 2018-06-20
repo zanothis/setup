@@ -40,6 +40,7 @@ let g:startify_custom_header = [
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+    Plug 'skammer/vim-css-color'
     call plug#end()
 " }}}
 
