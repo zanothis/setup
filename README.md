@@ -6,7 +6,7 @@ Arch, Manjaro, etc
 You can install the configurations by running the following command:
 
 ```bash
-$ curl -L https://tinyurl.com/y85zxujj | bash
+$ curl -L https://git.io/fCxJL | bash
 ```
 
 The install script will ensure that the following packages are installed:
