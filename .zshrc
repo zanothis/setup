@@ -1,5 +1,5 @@
 # Antigen Config
-source /usr/share/zsh/share/antigen.zsh
+source $HOME/.config/zsh/antigen.zsh
 
 antigen bundle zsh-users/zsh-syntax-highlighting
 
@@ -28,10 +28,6 @@ export SAVEHIST=500
 setopt CORRECT
 setopt DVORAK
 
-export SHELL=/usr/bin/zsh
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-source /home/nathan/.dvm/dvm.sh
 
 alias ls="ls -la"
