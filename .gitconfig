@@ -1,5 +1,8 @@
 [alias]
+    aspell = !git log --pretty=format:%s%n%n%b -n1 > /tmp/aspell.txt && aspell -c /tmp/aspell.txt && git commit --amend -F /tmp/aspell.txt
+    amend = commit --amend --no-edit
     br = branch
+    cb = !git checkout $(git branch --sort='-committerdate' --format='%(refname:short)' | fzf)
     ch = show --pretty="" --name-status
     cleanup = "!git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d"
     cm = "!git commit && curl -s http://whatthecommit.com/index.txt"
@@ -7,25 +10,44 @@
     cob = checkout -b
     dl = !git ls -1
     dif = diff --staged
+    dift = diff -b --diff-filter=ad
     dlc = diff --cached HEAD^
     dr = "!f() { git diff \"$1\"^..\"$1\"; }; f"
     ec = config --global -e
+    fc = "!sh -c 'git log --all --grep=\"$1\"' -"
+    ff = "!f() { git ls-files | grep $1; }; f"
     find = "!f() { git ls-files $2 | grep $1; }; f"
     fl = log -u
+    ft = "!sh -c 'git grep --heading --break -n -e \"$1\"' -"
+    hist = log --graph --date=relative --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(cyan)<%an>%Creset'
+    ia = !git add $(git ls-files --modified --others --exclude-standard | fzf -m --cycle)
+    iap = !git add -p $(git ls-files --modified --others --exclude-standard | fzf -m --cycle)
+    im = "!git merge $(git branch --list | fzf) ${1-HEAD}"
+    irestore = !git restore $(git ls-files --modified --others --exclude-standard | fzf -m --cycle)
     la = "!f() { git config -l | grep alias | cut -c 7- | awk -F\"=\" '{ st=index($0,\"=\"); printf \"%-12s = %s\\n\", $1, substr($0,st+1)}'; }; f"
     lc = !git ll "$1"^.."$1"
     ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+    ldiff = "!f(){ git diff --numstat ${1-} | awk 'NF==3 {plus+=$1; minus+=$2} END {printf(\"+%d, -%d\\n\", plus, minus)}'; }; f"
     lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
     migrate = "!f(){ git rebase --onto $1 $2 ${3-HEAD}; }; f"
+    patch = !git --no-pager diff --no-color
+    pf = push --force-with-lease
+    pup = !git push --set-upstream origin `git symbolic-ref --short HEAD`
     resolve = "!f(){ vim $1; git add $1; }; f"
     rollback = reset --soft HEAD~1
+    rours = "!f(){ git co --ours $1; git add $1; }; f"
+    rtheirs = "!f(){ git co --theirs $1; git add $1; }; f"
     save = !git add -A && git commit -m 'SAVEPOINT'
     st = status --column=
     undo = reset HEAD~1 --mixed
     up = "!f() { git pull --rebase --prune --autostash $@ && git submodule update --init --recursive; }; f"
     upr = "!f() { git pull --rebase --prune --autostash $@ && git submodule update --init --recursive --remote; }; f"
 
+[branch]
+    sort = -committerdate
+    
 [color]
     diff = auto
     status = auto
@@ -33,16 +55,49 @@
     interactive = auto
     ui = true
     pager = true
+    
+[color "diff"]
+    meta = 11
+    frag = magenta bold
+    commit = yellow bold
+    context = 15
+    func = 146 bold
+    whitespace = red reverse
+    
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = greed bold 22
 
 [commit]
     template = ~/.gitmessage
 
 [core]
     editor = vim
-    pager = less -X
+    pager = "delta --diff-so-fancy"
+    filemode = false
+    autocrlf = input
+    commitGraph = true
+    symlinks = true
+    excludesfile = ~/.gitignore
+    
+[delta]
+    line-numbers = true
+    line-numbers-right-format = "| "
+    navigate = true
+    side-by-side = true
+    syntax-theme = Solarized (Dark)
 
 [diff]
     tool = vimdiff
+
+[diff-so-fancy]
+    markEmptyLines = false
+    stripLeadingSymbols = false
+    
+[interactive]
+    singleKey = true
 
 [merge]
     tool = mvimdiff
@@ -53,10 +108,6 @@
 
 [push]
     default = simple
-
-[color "diff"]
-    old = red strike
-    new = green italic
-[user]
-	email = nathan@thebenjamins.me
-	name = Nathan Benjamin
+    
+[rebase]
+    autoSquash = true
